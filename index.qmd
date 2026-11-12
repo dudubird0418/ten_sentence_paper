@@ -1,0 +1,61 @@
+---
+title: "Older Shelves, Thicker Books: Is Publication Year Related to Page Count?"
+author: Wenlu Du
+date: today
+abstract: "Using a sample of 359 fictional books, this paper uses a Pearson correlation to examine whether a book's publication year is related to its length in pages, with implications for how an office bookshelf might be arranged."
+keywords: [office, book, correlation]
+execute:
+  echo: true
+bibliography: references.bib
+---
+
+## Introduction
+
+A bookshelf is one of the first things a visitor notices in an office, and the thickness of the books on it shapes how serious or approachable the space feels. This paper asks whether older books tend to be longer than newer ones, that is, whether a book's publication year is related to its page count.
+
+## Literature Review
+
+Office designers have argued that a bookshelf "speaks before its owner does" [@shelfman2019], and the length of the books on it is part of what it says. Some writers claim that books have grown shorter with each decade as readers' attention has shifted [@pagewright2017], yet no study has tested this claim with a correlation between publication year and page count.
+
+## Method
+
+```{python}
+import pandas as pd
+import numpy as np
+import seaborn as sns
+from scipy import stats
+
+df = pd.read_csv('confident_fictional_books.csv')
+df[['book_year', 'book_pages']].describe()
+```
+
+Using `{python} len(df)` fictional books published between `{python} f"{df['book_year'].min()}"` and `{python} f"{df['book_year'].max()}"`, a Pearson correlation was computed between publication year and page count. The null hypothesis is that publication year and page count are not correlated (r = 0), and the alternative hypothesis is that they are correlated (r ≠ 0).
+
+## Results
+
+```{python}
+corr_matrix = df[['book_year', 'book_pages']].corr()   # 2 x 2 correlation matrix
+r = corr_matrix.loc['book_year', 'book_pages']         # row label, column label
+r_test = stats.pearsonr(df['book_year'], df['book_pages'])   # same r, plus a p-value
+pval = r_test[1]
+p_text = "p < .001" if pval < 0.001 else f"p = {pval:.3f}"
+
+strength = "strong" if abs(r) > .8 else "moderate" if abs(r) > .4 else "weak"
+direction = "positive" if r > 0 else "negative"
+corr_matrix
+```
+
+```{python}
+sns.scatterplot(data=df, x='book_year', y='book_pages')
+```
+
+Publication year and page count showed a `{python} strength` `{python} direction` correlation, r(`{python} len(df) - 2`) = `{python} f"{r:.2f}"`, `{python} p_text`, so we `{python} "reject" if pval < 0.05 else "fail to reject"` the null hypothesis. In this sample, books published `{python} "earlier" if r < 0 else "later"` tended to have more pages.
+
+## Discussion
+
+These results suggest that an office shelf stocked with older books will tend to look heavier and more imposing than one stocked with recent titles. Because the books are fictional and correlation does not establish causation, future research should test whether the same pattern holds in real catalogs and whether genre explains part of the relationship.
+
+## References
+
+::: {#refs}
+:::
