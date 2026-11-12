@@ -1,0 +1,58 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Older Shelves, Thicker Books: Is Publication Year Related to Page Count?",
+    "section": "",
+    "text": "A bookshelf is one of the first things a visitor notices in an office, and the thickness of the books on it shapes how serious or approachable the space feels. This paper asks whether older books tend to be longer than newer ones, that is, whether a book’s publication year is related to its page count."
+  },
+  {
+    "objectID": "index.html#introduction",
+    "href": "index.html#introduction",
+    "title": "Older Shelves, Thicker Books: Is Publication Year Related to Page Count?",
+    "section": "",
+    "text": "A bookshelf is one of the first things a visitor notices in an office, and the thickness of the books on it shapes how serious or approachable the space feels. This paper asks whether older books tend to be longer than newer ones, that is, whether a book’s publication year is related to its page count."
+  },
+  {
+    "objectID": "index.html#literature-review",
+    "href": "index.html#literature-review",
+    "title": "Older Shelves, Thicker Books: Is Publication Year Related to Page Count?",
+    "section": "Literature Review",
+    "text": "Literature Review\nOffice designers have argued that a bookshelf “speaks before its owner does” (Shelfman 2019), and the length of the books on it is part of what it says. Some writers claim that books have grown shorter with each decade as readers’ attention has shifted (Pagewright 2017), yet no study has tested this claim with a correlation between publication year and page count."
+  },
+  {
+    "objectID": "index.html#method",
+    "href": "index.html#method",
+    "title": "Older Shelves, Thicker Books: Is Publication Year Related to Page Count?",
+    "section": "Method",
+    "text": "Method\n\nimport pandas as pd\nimport numpy as np\nimport seaborn as sns\nfrom scipy import stats\n\ndf = pd.read_csv('confident_fictional_books.csv')\ndf[['book_year', 'book_pages']].describe()\n\n\n\n\n\n\n\n\nbook_year\nbook_pages\n\n\n\n\ncount\n359.000000\n359.000000\n\n\nmean\n1914.754875\n241.348189\n\n\nstd\n64.787026\n204.661292\n\n\nmin\n1800.000000\n11.000000\n\n\n25%\n1859.500000\n85.500000\n\n\n50%\n1922.000000\n175.000000\n\n\n75%\n1971.000000\n338.000000\n\n\nmax\n2019.000000\n898.000000\n\n\n\n\n\n\n\nUsing 359 fictional books published between 1800 and 2019, a Pearson correlation was computed between publication year and page count. The null hypothesis is that publication year and page count are not correlated (r = 0), and the alternative hypothesis is that they are correlated (r ≠ 0)."
+  },
+  {
+    "objectID": "index.html#results",
+    "href": "index.html#results",
+    "title": "Older Shelves, Thicker Books: Is Publication Year Related to Page Count?",
+    "section": "Results",
+    "text": "Results\n\ncorr_matrix = df[['book_year', 'book_pages']].corr()   # 2 x 2 correlation matrix\nr = corr_matrix.loc['book_year', 'book_pages']         # row label, column label\nr_test = stats.pearsonr(df['book_year'], df['book_pages'])   # same r, plus a p-value\npval = r_test[1]\np_text = \"p &lt; .001\" if pval &lt; 0.001 else f\"p = {pval:.3f}\"\n\nstrength = \"strong\" if abs(r) &gt; .8 else \"moderate\" if abs(r) &gt; .4 else \"weak\"\ndirection = \"positive\" if r &gt; 0 else \"negative\"\ncorr_matrix\n\n\n\n\n\n\n\n\nbook_year\nbook_pages\n\n\n\n\nbook_year\n1.000000\n-0.447629\n\n\nbook_pages\n-0.447629\n1.000000\n\n\n\n\n\n\n\n\nsns.scatterplot(data=df, x='book_year', y='book_pages')\n\n\n\n\n\n\n\n\nPublication year and page count showed a moderate negative correlation, r(357) = -0.45, p &lt; .001, so we reject the null hypothesis. In this sample, books published earlier tended to have more pages."
+  },
+  {
+    "objectID": "index.html#discussion",
+    "href": "index.html#discussion",
+    "title": "Older Shelves, Thicker Books: Is Publication Year Related to Page Count?",
+    "section": "Discussion",
+    "text": "Discussion\nThese results suggest that an office shelf stocked with older books will tend to look heavier and more imposing than one stocked with recent titles. Because the books are fictional and correlation does not establish causation, future research should test whether the same pattern holds in real catalogs and whether genre explains part of the relationship."
+  },
+  {
+    "objectID": "index.html#references",
+    "href": "index.html#references",
+    "title": "Older Shelves, Thicker Books: Is Publication Year Related to Page Count?",
+    "section": "References",
+    "text": "References\n\n\nPagewright, Jordan. 2017. “Shorter by the Decade: Trends in Book Length.” Journal of Imaginary Publishing 2: 45–61.\n\n\nShelfman, Rowan. 2019. The Speaking Shelf: Books and the Modern Office. Fictional Press."
+  }
+]
